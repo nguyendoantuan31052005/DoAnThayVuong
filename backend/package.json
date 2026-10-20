@@ -36,12 +36,13 @@
     "class-validator": "^0.14.2",
     "dotenv": "^16.6.0",
     "helmet": "^8.3.0",
+    "prisma": "6.19.0",
     "reflect-metadata": "^0.2.2",
-    "rxjs": "^7.8.2",
-    "prisma": "6.19.0"
+    "rxjs": "^7.8.2"
   },
   "devDependencies": {
     "@types/express": "^5.0.6",
+    "@types/multer": "^2.3.0",
     "@types/node": "^24.0.0",
     "tsx": "^4.20.0",
     "typescript": "^5.9.0"

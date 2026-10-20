@@ -15,6 +15,7 @@ export async function createApplication() {
   validateConfig();
   const app = await NestFactory.create<NestExpressApplication>(AppModule, { logger: process.env.NODE_ENV === 'test' ? false : ['log', 'warn', 'error'] });
   app.getHttpAdapter().getInstance().disable('x-powered-by');
+  app.getHttpAdapter().getInstance().set('trust proxy', intConfig('TRUST_PROXY_HOPS', 0, 0, 1) || false);
   app.use((req: unknown, res: { setHeader: (name: string, value: string) => void }, next: () => void) => {
     res.setHeader('X-Request-Id', randomUUID()); next();
   });

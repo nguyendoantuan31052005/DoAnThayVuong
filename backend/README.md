@@ -74,7 +74,7 @@ API ngoài health, đăng ký và đăng nhập cần header `Authorization: Bea
 Ví dụ đăng ký:
 
 ```json
-{"email":"user@example.com","name":"Nguyễn Văn An","password":"your-own-long-password"}
+{"email":"user@example.com","name":"Nguyễn Văn An","password":"YourOwnPassword123"}
 ```
 
 Đăng nhập chỉ gửi `email` và `password`. Response xác thực có `user`, `accessToken`, `expiresIn: 3600`; không có passwordHash. Không cần gửi userId khi tạo scan/báo cáo vì backend lấy từ phiên đăng nhập.
@@ -106,7 +106,7 @@ npm run admin:promote -- admin@example.com
 
 Không có API tự cấp ADMIN và không tạo tài khoản/mật khẩu mặc định. Đăng nhập tài khoản đó để dùng API Admin. Khóa tài khoản thu hồi toàn bộ phiên ngay; mở khóa cần đăng nhập lại. Admin không được tự khóa mình.
 
-Đổi mật khẩu gửi `{ "currentPassword": "...", "newPassword": "..." }`. Sau thành công, tất cả phiên của tài khoản bị thu hồi. Logout chỉ thu hồi phiên hiện tại. Mật khẩu dùng bcrypt cost 12, tối đa 72 byte UTF-8. Chưa có refresh token, xác minh email hoặc quên mật khẩu.
+Đổi mật khẩu gửi `{ "currentPassword": "...", "newPassword": "..." }`. Sau thành công, tất cả phiên của tài khoản bị thu hồi. Logout chỉ thu hồi phiên hiện tại. Mật khẩu mới ít nhất 12 ký tự, có chữ hoa, chữ thường và số. Mật khẩu dùng bcrypt cost 12, tối đa 72 byte UTF-8. Chưa có refresh token, xác minh email hoặc quên mật khẩu.
 
 ## 5. Hợp đồng với FastAPI
 
@@ -227,3 +227,17 @@ Các overrides dependency trong package.json vá deepmerge-ts/effect của Prism
 ## 12. Kết quả bàn giao
 
 Xem `docs/VALIDATION.md` cho các bước đã chạy, số kiểm thử và giới hạn xác minh.
+
+## API bổ sung theo thiết kế
+
+- `POST /api/public/scans`: quét khách, 5 lần/phút/IP, không lưu database.
+- `GET /api/scans/summary`: tổng lượt quét, nguy cơ cao và lần gần nhất của chính tài khoản.
+- `GET /api/scans`: thêm `q`, `riskLevel`, `from`, `to`; ngày không có giờ được hiểu theo UTC.
+- `PATCH /api/auth/me`: cập nhật tên và `organization`.
+- Báo cáo nhận thêm `reason`, `evidenceUrl`, `scanId`; scan phải thuộc người gửi và cùng URL. Lưu snapshot điểm và phiên bản mô hình.
+- `POST /api/reports/:id/evidence`: multipart trường `file`, PNG/JPG tối đa 5 MiB. `GET` cùng đường dẫn tải chứng cứ với xác thực chủ sở hữu/Admin. Báo cáo đã xử lý không được thay ảnh.
+- `GET /api/admin/analytics`: phân bố rủi ro và số lượt quét 7 ngày UTC.
+- `POST /api/admin/users`, `PATCH /api/admin/users/:id/role`, `GET /api/admin/audit-logs`: tạo người dùng, đổi vai trò, xem nhật ký. Không được tự đổi vai trò; đổi vai trò thu hồi phiên của tài khoản đích.
+- Danh sách Admin hỗ trợ bộ lọc theo DTO trong OpenAPI; phân trang bằng `page`, `limit`.
+
+`TRUST_PROXY_HOPS=0` mặc định. Compose gốc dùng 1 hop vì Nginx ghi đè X-Forwarded-For và backend chỉ bind loopback trên host; cần đánh giá lại nếu thay topology proxy.

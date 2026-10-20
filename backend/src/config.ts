@@ -14,6 +14,7 @@ export function databaseUrl(): string {
 export function validateConfig() {
   if (!process.env.JWT_SECRET || Buffer.byteLength(process.env.JWT_SECRET) < 32) throw new Error('JWT_SECRET phải có ít nhất 32 byte');
   databaseUrl();
+  intConfig('TRUST_PROXY_HOPS', 0, 0, 1);
   intConfig('HTTP_RATE_LIMIT', 120, 1, 10000);
   if (process.env.NODE_ENV && !['development', 'production', 'test'].includes(process.env.NODE_ENV)) throw new Error('NODE_ENV chỉ nhận development, production hoặc test');
   intConfig('PORT', 3000, 1, 65535);

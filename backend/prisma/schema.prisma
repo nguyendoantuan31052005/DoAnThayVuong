@@ -10,6 +10,7 @@ model User {
   id String @id @default(uuid())
   email String @unique
   name String
+  organization String @default("")
   passwordHash String
   role String @default("USER")
   blocked Boolean @default(false)
@@ -27,6 +28,8 @@ model Scan {
   riskLevel String
   reasons String
   modelVersion String
+  processingMs Int @default(0)
+  reports Report[]
   createdAt DateTime @default(now())
   @@index([userId, createdAt])
 }
@@ -36,6 +39,13 @@ model Report {
   user User @relation(fields: [userId], references: [id])
   url String
   description String
+  reason String @default("OTHER")
+  evidenceUrl String @default("")
+  scanId String?
+  scan Scan? @relation(fields: [scanId], references: [id], onDelete: SetNull)
+  scanRiskScore Float?
+  scanModelVersion String?
+  evidence Evidence?
   status String @default("PENDING")
   adminNote String @default("")
   createdAt DateTime @default(now())
@@ -51,4 +61,23 @@ model Session {
   revokedAt DateTime?
   createdAt DateTime @default(now())
   @@index([userId, expiresAt])
+}
+
+model Evidence {
+  reportId String @id
+  report Report @relation(fields: [reportId], references: [id], onDelete: Cascade)
+  fileName String
+  mimeType String
+  size Int
+  data Bytes
+  createdAt DateTime @default(now())
+}
+model AuditLog {
+  id String @id @default(uuid())
+  actorId String
+  action String
+  targetId String
+  details String
+  createdAt DateTime @default(now())
+  @@index([createdAt])
 }

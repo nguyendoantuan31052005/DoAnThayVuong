@@ -5,7 +5,7 @@ import { ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsInt, Max, Min } from 'class-validator';
 
-export const publicUser = { id: true, email: true, name: true, role: true, blocked: true, createdAt: true } satisfies Prisma.UserSelect;
+export const publicUser = { id: true, email: true, name: true, organization: true, role: true, blocked: true, createdAt: true } satisfies Prisma.UserSelect;
 export type PublicUser = Prisma.UserGetPayload<{ select: typeof publicUser }>;
 export interface AuthRequest extends Request { user: PublicUser; sessionId: string; }
 export class PaginationDto {

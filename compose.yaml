@@ -1,0 +1,26 @@
+services:
+  backend:
+    image: phishing-backend:local
+    build: ./backend
+    env_file: ./backend/.env
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      DATABASE_URL: file:/data/phishing.db
+      TRUST_PROXY_HOPS: 1
+    ports:
+      - "127.0.0.1:${API_PORT:-3000}:3000"
+    volumes:
+      - backend_data:/data
+    restart: unless-stopped
+  frontend:
+    image: phishing-frontend:local
+    build: ./frontend
+    ports:
+      - "${WEB_PORT:-8080}:8080"
+    depends_on:
+      backend:
+        condition: service_healthy
+    restart: unless-stopped
+volumes:
+  backend_data:

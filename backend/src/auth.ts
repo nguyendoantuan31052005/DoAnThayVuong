@@ -88,7 +88,7 @@ export class AuthController {
   @ApiOperation({ summary: 'Cập nhật tên hiển thị' })
   @ApiOkResponse({ type: UserResponse })
   update(@Req() req: AuthRequest, @Body() dto: ProfileDto) {
-    return this.db.user.update({ where: { id: req.user.id }, data: { name: dto.name }, select: publicUser });
+    return this.db.user.update({ where: { id: req.user.id }, data: { name: dto.name, ...(dto.organization !== undefined ? { organization: dto.organization } : {}) }, select: publicUser });
   }
   @Post('logout') @HttpCode(200) @UseGuards(AuthGuard) @ApiBearerAuth()
   @ApiOperation({ summary: 'Thu hồi phiên hiện tại; token cũ không dùng lại được' })

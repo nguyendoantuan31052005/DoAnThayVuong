@@ -3,7 +3,9 @@ const spec = JSON.parse(readFileSync('docs/openapi.json', 'utf8'));
 const bodies = {
   RegisterDto: { email: '{{email}}', name: 'Demo User', password: '{{password}}' },
   LoginDto: { email: '{{email}}', password: '{{password}}' },
-  ProfileDto: { name: 'Tên hiển thị mới' },
+  ProfileDto: { name: 'Tên hiển thị mới', organization: 'Khoa Công nghệ thông tin' },
+  CreateUserDto: { email: '{{email}}', name: 'Người dùng mới', password: '{{password}}', role: 'USER' },
+  RoleDto: { role: 'USER' },
   PasswordDto: { currentPassword: '{{password}}', newPassword: '{{newPassword}}' },
   ScanDto: { url: '{{url}}' },
   ReportDto: { url: '{{url}}', description: 'Website có dấu hiệu giả mạo thương hiệu' },
@@ -22,6 +24,7 @@ for (const [path, methods] of Object.entries(spec.paths)) {
     const req = { method: method.toUpperCase(), header: [], url, description: op.summary };
     if (op.security?.length) req.auth = { type: 'bearer', bearer: [{ key: 'token', value: admin ? '{{adminToken}}' : '{{token}}', type: 'string' }] };
     else req.auth = { type: 'noauth' };
+    if (path.endsWith('/evidence') && method === 'post') req.body = { mode: 'formdata', formdata: [{ key: 'file', type: 'file', src: [] }] };
     const ref = op.requestBody?.content?.['application/json']?.schema?.$ref?.split('/').pop();
     if (ref) {
       req.header.push({ key: 'Content-Type', value: 'application/json' });
@@ -36,7 +39,7 @@ for (const [path, methods] of Object.entries(spec.paths)) {
     groups.get(group).push(item);
   }
 }
-const values = { baseUrl: 'http://localhost:3000/api', email: 'demo@example.com', password: 'change-this-demo-password', newPassword: 'another-demo-password', url: 'https://example.com', token: '', adminToken: '', userId: '', scanId: '', reportId: '' };
+const values = { baseUrl: 'http://localhost:3000/api', email: 'demo@example.com', password: 'Change-this-demo-password-123', newPassword: 'Another-demo-password-123', url: 'https://example.com', token: '', adminToken: '', userId: '', scanId: '', reportId: '' };
 const collection = {
   info: { name: 'Phishing Backend — NestJS', schema: 'https://schema.getpostman.com/json/collection/v2.1.0/collection.json', description: 'Collection tương tác. Cập nhật biến email/password; đăng ký hoặc đăng nhập để tự lưu token. Admin cần adminToken riêng. Kiểm tra URL cần FastAPI thật. Logout/password/delete/block thay đổi trạng thái: chạy có chủ ý, không dùng Run Collection như một test suite độc lập.' },
   variable: Object.entries(values).map(([key, value]) => ({ key, value, type: 'string' })),

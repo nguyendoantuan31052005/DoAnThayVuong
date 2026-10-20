@@ -270,6 +270,106 @@
         ]
       }
     },
+    "/api/reports/{id}/evidence": {
+      "post": {
+        "operationId": "EvidenceController_upload",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "file"
+                ],
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Đính kèm hoặc thay thế ảnh bằng chứng PNG/JPG tối đa 5 MiB; chủ báo cáo hoặc ADMIN",
+        "tags": [
+          "Reports"
+        ]
+      },
+      "get": {
+        "operationId": "EvidenceController_download",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Tải ảnh bằng chứng; chỉ chủ báo cáo hoặc ADMIN, không có URL công khai",
+        "tags": [
+          "Reports"
+        ]
+      }
+    },
+    "/api/public/scans": {
+      "post": {
+        "operationId": "GuestScanController_scan",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ScanDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "503": {
+            "description": "Dịch vụ AI không khả dụng"
+          }
+        },
+        "summary": "Phân tích URL không cần đăng nhập; không lưu lịch sử",
+        "tags": [
+          "Guest"
+        ]
+      }
+    },
     "/api/scans": {
       "post": {
         "operationId": "ScanController_scan",
@@ -353,6 +453,46 @@
                 }
               ]
             }
+          },
+          {
+            "name": "q",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "maxLength": 200,
+              "type": "string"
+            }
+          },
+          {
+            "name": "riskLevel",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "SAFE",
+                "SUSPICIOUS",
+                "DANGEROUS"
+              ]
+            }
+          },
+          {
+            "name": "from",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "format": "date",
+              "type": "string"
+            }
+          },
+          {
+            "name": "to",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "format": "date",
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -412,6 +552,38 @@
           }
         ],
         "summary": "Lịch sử kiểm tra của người đăng nhập, phân trang",
+        "tags": [
+          "Scans"
+        ]
+      }
+    },
+    "/api/scans/summary": {
+      "get": {
+        "operationId": "ScanController_summary",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "400": {
+            "description": "Dữ liệu không hợp lệ"
+          },
+          "401": {
+            "description": "Phiên đăng nhập không hợp lệ"
+          },
+          "404": {
+            "description": "Bản ghi không tồn tại hoặc không thuộc tài khoản"
+          },
+          "429": {
+            "description": "Quá giới hạn yêu cầu; xem Retry-After"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Tổng số lần quét, số lượt nguy cơ cao và lần quét mới nhất của chính mình",
         "tags": [
           "Scans"
         ]
@@ -591,6 +763,29 @@
                 }
               ]
             }
+          },
+          {
+            "name": "q",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "maxLength": 200,
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "PENDING",
+                "REVIEWING",
+                "CONFIRMED",
+                "REJECTED"
+              ]
+            }
           }
         ],
         "responses": {
@@ -736,6 +931,39 @@
                 }
               ]
             }
+          },
+          {
+            "name": "q",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "maxLength": 200,
+              "type": "string"
+            }
+          },
+          {
+            "name": "role",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "USER",
+                "ADMIN"
+              ]
+            }
+          },
+          {
+            "name": "blocked",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "true",
+                "false"
+              ]
+            }
           }
         ],
         "responses": {
@@ -798,6 +1026,49 @@
           }
         ],
         "summary": "ADMIN: danh sách người dùng, không trả mật khẩu",
+        "tags": [
+          "Admin"
+        ]
+      },
+      "post": {
+        "operationId": "AdminController_createUser",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          },
+          "400": {
+            "description": "Dữ liệu không hợp lệ"
+          },
+          "401": {
+            "description": "Phiên đăng nhập không hợp lệ"
+          },
+          "403": {
+            "description": "Cần quyền ADMIN"
+          },
+          "404": {
+            "description": "Bản ghi không tồn tại hoặc không thuộc tài khoản"
+          },
+          "429": {
+            "description": "Quá giới hạn yêu cầu; xem Retry-After"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "ADMIN: tạo tài khoản; mật khẩu không được ghi vào nhật ký",
         "tags": [
           "Admin"
         ]
@@ -864,6 +1135,126 @@
         ]
       }
     },
+    "/api/admin/users/{id}/role": {
+      "patch": {
+        "operationId": "AdminController_changeRole",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RoleDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "400": {
+            "description": "Dữ liệu không hợp lệ"
+          },
+          "401": {
+            "description": "Phiên đăng nhập không hợp lệ"
+          },
+          "403": {
+            "description": "Cần quyền ADMIN"
+          },
+          "404": {
+            "description": "Bản ghi không tồn tại hoặc không thuộc tài khoản"
+          },
+          "429": {
+            "description": "Quá giới hạn yêu cầu; xem Retry-After"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "ADMIN: đổi vai trò tài khoản khác và thu hồi phiên của tài khoản đó",
+        "tags": [
+          "Admin"
+        ]
+      }
+    },
+    "/api/admin/audit-logs": {
+      "get": {
+        "operationId": "AdminController_auditLogs",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100000,
+              "default": 1,
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/Object"
+                }
+              ]
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20,
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/Object"
+                }
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "400": {
+            "description": "Dữ liệu không hợp lệ"
+          },
+          "401": {
+            "description": "Phiên đăng nhập không hợp lệ"
+          },
+          "403": {
+            "description": "Cần quyền ADMIN"
+          },
+          "404": {
+            "description": "Bản ghi không tồn tại hoặc không thuộc tài khoản"
+          },
+          "429": {
+            "description": "Quá giới hạn yêu cầu; xem Retry-After"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "ADMIN: nhật ký tạo tài khoản, đổi vai trò, khóa và kiểm duyệt",
+        "tags": [
+          "Admin"
+        ]
+      }
+    },
     "/api/admin/reports": {
       "get": {
         "operationId": "AdminController_reports",
@@ -895,6 +1286,29 @@
                 {
                   "$ref": "#/components/schemas/Object"
                 }
+              ]
+            }
+          },
+          {
+            "name": "q",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "maxLength": 200,
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "PENDING",
+                "REVIEWING",
+                "CONFIRMED",
+                "REJECTED"
               ]
             }
           }
@@ -1058,6 +1472,46 @@
                 }
               ]
             }
+          },
+          {
+            "name": "q",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "maxLength": 200,
+              "type": "string"
+            }
+          },
+          {
+            "name": "riskLevel",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "SAFE",
+                "SUSPICIOUS",
+                "DANGEROUS"
+              ]
+            }
+          },
+          {
+            "name": "from",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "format": "date",
+              "type": "string"
+            }
+          },
+          {
+            "name": "to",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "format": "date",
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -1167,6 +1621,41 @@
         ]
       }
     },
+    "/api/admin/analytics": {
+      "get": {
+        "operationId": "AdminController_analytics",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "400": {
+            "description": "Dữ liệu không hợp lệ"
+          },
+          "401": {
+            "description": "Phiên đăng nhập không hợp lệ"
+          },
+          "403": {
+            "description": "Cần quyền ADMIN"
+          },
+          "404": {
+            "description": "Bản ghi không tồn tại hoặc không thuộc tài khoản"
+          },
+          "429": {
+            "description": "Quá giới hạn yêu cầu; xem Retry-After"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "ADMIN: lượt quét theo ngày và phân bố rủi ro trong 7 ngày UTC gần nhất",
+        "tags": [
+          "Admin"
+        ]
+      }
+    },
     "/api/admin/ai/status": {
       "get": {
         "operationId": "AdminController_aiStatus",
@@ -1257,7 +1746,7 @@
           },
           "password": {
             "type": "string",
-            "minLength": 10,
+            "minLength": 12,
             "maxLength": 72,
             "format": "password",
             "description": "Tối đa 72 byte UTF-8"
@@ -1283,6 +1772,9 @@
           "name": {
             "type": "string"
           },
+          "organization": {
+            "type": "string"
+          },
           "role": {
             "type": "string",
             "enum": [
@@ -1302,6 +1794,7 @@
           "id",
           "email",
           "name",
+          "organization",
           "role",
           "blocked",
           "createdAt"
@@ -1349,6 +1842,10 @@
       "ProfileDto": {
         "type": "object",
         "properties": {
+          "organization": {
+            "type": "string",
+            "maxLength": 160
+          },
           "name": {
             "type": "string",
             "minLength": 2,
@@ -1381,7 +1878,7 @@
           "newPassword": {
             "type": "string",
             "format": "password",
-            "minLength": 10,
+            "minLength": 12,
             "maxLength": 72
           }
         },
@@ -1441,6 +1938,10 @@
           "modelVersion": {
             "type": "string"
           },
+          "processingMs": {
+            "type": "number",
+            "description": "Thời gian xử lý thực tế, mili giây"
+          },
           "createdAt": {
             "type": "string",
             "format": "date-time"
@@ -1454,6 +1955,7 @@
           "riskLevel",
           "reasons",
           "modelVersion",
+          "processingMs",
           "createdAt"
         ]
       },
@@ -1469,6 +1971,23 @@
             "example": "https://example.com",
             "maxLength": 2048
           },
+          "reason": {
+            "type": "string",
+            "enum": [
+              "LOGIN_IMPERSONATION",
+              "BRAND_IMPERSONATION",
+              "DATA_THEFT",
+              "OTHER"
+            ]
+          },
+          "evidenceUrl": {
+            "type": "string",
+            "maxLength": 2048
+          },
+          "scanId": {
+            "type": "string",
+            "format": "uuid"
+          },
           "description": {
             "type": "string",
             "minLength": 10,
@@ -1480,9 +1999,37 @@
           "description"
         ]
       },
+      "EvidenceResponse": {
+        "type": "object",
+        "properties": {
+          "fileName": {
+            "type": "string"
+          },
+          "mimeType": {
+            "type": "string"
+          },
+          "size": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "fileName",
+          "mimeType",
+          "size"
+        ]
+      },
       "ReportResponse": {
         "type": "object",
         "properties": {
+          "evidence": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/EvidenceResponse"
+              }
+            ]
+          },
           "id": {
             "type": "string",
             "format": "uuid"
@@ -1496,6 +2043,30 @@
           },
           "description": {
             "type": "string"
+          },
+          "reason": {
+            "type": "string",
+            "enum": [
+              "LOGIN_IMPERSONATION",
+              "BRAND_IMPERSONATION",
+              "DATA_THEFT",
+              "OTHER"
+            ]
+          },
+          "evidenceUrl": {
+            "type": "string"
+          },
+          "scanId": {
+            "type": "object",
+            "nullable": true
+          },
+          "scanRiskScore": {
+            "type": "number",
+            "nullable": true
+          },
+          "scanModelVersion": {
+            "type": "string",
+            "nullable": true
           },
           "status": {
             "type": "string",
@@ -1519,10 +2090,16 @@
           }
         },
         "required": [
+          "evidence",
           "id",
           "userId",
           "url",
           "description",
+          "reason",
+          "evidenceUrl",
+          "scanId",
+          "scanRiskScore",
+          "scanModelVersion",
           "status",
           "adminNote",
           "createdAt",
@@ -1538,6 +2115,57 @@
         },
         "required": [
           "blocked"
+        ]
+      },
+      "CreateUserDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "user@example.com",
+            "maxLength": 254
+          },
+          "name": {
+            "type": "string",
+            "example": "Nguyễn Văn An",
+            "minLength": 2,
+            "maxLength": 100
+          },
+          "password": {
+            "type": "string",
+            "minLength": 12,
+            "maxLength": 72,
+            "format": "password",
+            "description": "Tối đa 72 byte UTF-8"
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "USER",
+              "ADMIN"
+            ],
+            "default": "USER"
+          }
+        },
+        "required": [
+          "email",
+          "name",
+          "password"
+        ]
+      },
+      "RoleDto": {
+        "type": "object",
+        "properties": {
+          "role": {
+            "type": "string",
+            "enum": [
+              "USER",
+              "ADMIN"
+            ]
+          }
+        },
+        "required": [
+          "role"
         ]
       },
       "ReviewDto": {

@@ -4,6 +4,7 @@ export class UserResponse {
   @ApiProperty({ format: 'uuid' }) id!: string;
   @ApiProperty({ format: 'email' }) email!: string;
   @ApiProperty() name!: string;
+  @ApiProperty() organization!: string;
   @ApiProperty({ enum: ['USER', 'ADMIN'] }) role!: string;
   @ApiProperty() blocked!: boolean;
   @ApiProperty({ format: 'date-time' }) createdAt!: string;
@@ -21,13 +22,25 @@ export class ScanResponse {
   @ApiProperty({ enum: ['SAFE', 'SUSPICIOUS', 'DANGEROUS'] }) riskLevel!: string;
   @ApiProperty({ type: [String] }) reasons!: string[];
   @ApiProperty() modelVersion!: string;
+  @ApiProperty({ description: 'Thời gian xử lý thực tế, mili giây' }) processingMs!: number;
   @ApiProperty({ format: 'date-time' }) createdAt!: string;
 }
+export class EvidenceResponse {
+  @ApiProperty() fileName!: string;
+  @ApiProperty() mimeType!: string;
+  @ApiProperty() size!: number;
+}
 export class ReportResponse {
+  @ApiProperty({ type: EvidenceResponse, nullable: true }) evidence!: EvidenceResponse | null;
   @ApiProperty({ format: 'uuid' }) id!: string;
   @ApiProperty({ format: 'uuid' }) userId!: string;
   @ApiProperty() url!: string;
   @ApiProperty() description!: string;
+  @ApiProperty({ enum: ['LOGIN_IMPERSONATION','BRAND_IMPERSONATION','DATA_THEFT','OTHER'] }) reason!: string;
+  @ApiProperty() evidenceUrl!: string;
+  @ApiProperty({ nullable: true }) scanId!: string | null;
+  @ApiProperty({ nullable: true, type: Number }) scanRiskScore!: number | null;
+  @ApiProperty({ nullable: true, type: String }) scanModelVersion!: string | null;
   @ApiProperty({ enum: ['PENDING', 'REVIEWING', 'CONFIRMED', 'REJECTED'] }) status!: string;
   @ApiProperty() adminNote!: string;
   @ApiProperty({ format: 'date-time' }) createdAt!: string;

@@ -17,12 +17,12 @@
     },
     {
       "key": "password",
-      "value": "change-this-demo-password",
+      "value": "Change-this-demo-password-123",
       "type": "string"
     },
     {
       "key": "newPassword",
-      "value": "another-demo-password",
+      "value": "Another-demo-password-123",
       "type": "string"
     },
     {
@@ -194,7 +194,7 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"Tên hiển thị mới\"\n}",
+              "raw": "{\n  \"name\": \"Tên hiển thị mới\",\n  \"organization\": \"Khoa Công nghệ thông tin\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -206,20 +206,15 @@
       ]
     },
     {
-      "name": "Scans",
+      "name": "Reports",
       "item": [
         {
-          "name": "POST /api/scans",
+          "name": "POST /api/reports/{id}/evidence",
           "request": {
             "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "url": "{{baseUrl}}/scans",
-            "description": "Phân tích URL bằng FastAPI và lưu lịch sử khi thành công",
+            "header": [],
+            "url": "{{baseUrl}}/reports/{{reportId}}/evidence",
+            "description": "Đính kèm hoặc thay thế ảnh bằng chứng PNG/JPG tối đa 5 MiB; chủ báo cáo hoặc ADMIN",
             "auth": {
               "type": "bearer",
               "bearer": [
@@ -231,34 +226,24 @@
               ]
             },
             "body": {
-              "mode": "raw",
-              "raw": "{\n  \"url\": \"{{url}}\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": []
                 }
-              }
+              ]
             }
-          },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "if (pm.response.code === 201) pm.collectionVariables.set('scanId', pm.response.json().id);"
-                ]
-              }
-            }
-          ]
+          }
         },
         {
-          "name": "GET /api/scans",
+          "name": "GET /api/reports/{id}/evidence",
           "request": {
             "method": "GET",
             "header": [],
-            "url": "{{baseUrl}}/scans?page=1&pageSize=20",
-            "description": "Lịch sử kiểm tra của người đăng nhập, phân trang",
+            "url": "{{baseUrl}}/reports/{{reportId}}/evidence",
+            "description": "Tải ảnh bằng chứng; chỉ chủ báo cáo hoặc ADMIN, không có URL công khai",
             "auth": {
               "type": "bearer",
               "bearer": [
@@ -271,49 +256,6 @@
             }
           }
         },
-        {
-          "name": "GET /api/scans/{id}",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": "{{baseUrl}}/scans/{{scanId}}",
-            "description": "Chi tiết lần kiểm tra thuộc tài khoản hiện tại",
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{token}}",
-                  "type": "string"
-                }
-              ]
-            }
-          }
-        },
-        {
-          "name": "DELETE /api/scans/{id}",
-          "request": {
-            "method": "DELETE",
-            "header": [],
-            "url": "{{baseUrl}}/scans/{{scanId}}",
-            "description": "Xóa một bản ghi lịch sử của chính mình",
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{token}}",
-                  "type": "string"
-                }
-              ]
-            }
-          }
-        }
-      ]
-    },
-    {
-      "name": "Reports",
-      "item": [
         {
           "name": "POST /api/reports",
           "request": {
@@ -399,6 +341,162 @@
       ]
     },
     {
+      "name": "Guest",
+      "item": [
+        {
+          "name": "POST /api/public/scans",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/public/scans",
+            "description": "Phân tích URL không cần đăng nhập; không lưu lịch sử",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"url\": \"{{url}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Scans",
+      "item": [
+        {
+          "name": "POST /api/scans",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/scans",
+            "description": "Phân tích URL bằng FastAPI và lưu lịch sử khi thành công",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"url\": \"{{url}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 201) pm.collectionVariables.set('scanId', pm.response.json().id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET /api/scans",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/scans?page=1&pageSize=20",
+            "description": "Lịch sử kiểm tra của người đăng nhập, phân trang",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /api/scans/summary",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/scans/summary",
+            "description": "Tổng số lần quét, số lượt nguy cơ cao và lần quét mới nhất của chính mình",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /api/scans/{id}",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/scans/{{scanId}}",
+            "description": "Chi tiết lần kiểm tra thuộc tài khoản hiện tại",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "DELETE /api/scans/{id}",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/scans/{{scanId}}",
+            "description": "Xóa một bản ghi lịch sử của chính mình",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
       "name": "Admin",
       "item": [
         {
@@ -417,6 +515,39 @@
                   "type": "string"
                 }
               ]
+            }
+          }
+        },
+        {
+          "name": "POST /api/admin/users",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/admin/users",
+            "description": "ADMIN: tạo tài khoản; mật khẩu không được ghi vào nhật ký",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{email}}\",\n  \"name\": \"Người dùng mới\",\n  \"password\": \"{{password}}\",\n  \"role\": \"USER\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             }
           }
         },
@@ -450,6 +581,58 @@
                   "language": "json"
                 }
               }
+            }
+          }
+        },
+        {
+          "name": "PATCH /api/admin/users/{id}/role",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/admin/users/{{userId}}/role",
+            "description": "ADMIN: đổi vai trò tài khoản khác và thu hồi phiên của tài khoản đó",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"role\": \"USER\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "GET /api/admin/audit-logs",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/admin/audit-logs?page=1&pageSize=20",
+            "description": "ADMIN: nhật ký tạo tài khoản, đổi vai trò, khóa và kiểm duyệt",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
             }
           }
         },
@@ -531,6 +714,25 @@
             "header": [],
             "url": "{{baseUrl}}/admin/stats",
             "description": "ADMIN: tổng người dùng, lượt kiểm tra, lượt nguy hiểm và báo cáo chờ",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /api/admin/analytics",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/admin/analytics",
+            "description": "ADMIN: lượt quét theo ngày và phân bố rủi ro trong 7 ngày UTC gần nhất",
             "auth": {
               "type": "bearer",
               "bearer": [

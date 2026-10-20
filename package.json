@@ -1,0 +1,15 @@
+{
+  "name": "do-an-phishing-ai",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Ứng dụng phát hiện phishing: React + NestJS + FastAPI integration",
+  "scripts": {
+    "setup": "node scripts/setup.cjs",
+    "dev": "node scripts/dev.cjs",
+    "build": "npm --prefix backend run build && npm --prefix frontend run build",
+    "test": "npm --prefix backend test && npm --prefix frontend run test:e2e",
+    "docker:build": "node scripts/build-images.cjs",
+    "docker:smoke": "node scripts/smoke-stack.cjs"
+  },
+  "engines": { "node": ">=22 <25" }
+}

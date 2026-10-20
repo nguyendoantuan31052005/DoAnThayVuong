@@ -27,7 +27,7 @@ async function main() {
     function baseUrl() { return 'http://127.0.0.1:' + docker('inspect', '--format', '{{(index (index .NetworkSettings.Ports "3000/tcp") 0).HostPort}}', name) + '/api'; }
     let base = baseUrl();
     await waitReady(base);
-    const response = await fetch(base + '/auth/register', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: 'smoke@example.com', name: 'Smoke Test', password: randomBytes(16).toString('hex') }) });
+    const response = await fetch(base + '/auth/register', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: 'smoke@example.com', name: 'Smoke Test', password: 'Aa1-' + randomBytes(16).toString('hex') }) });
     check(response.status === 201, 'Container registration failed');
     const { accessToken } = await response.json();
     docker('restart', name);

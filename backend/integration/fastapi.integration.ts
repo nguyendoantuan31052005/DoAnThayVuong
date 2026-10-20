@@ -27,7 +27,7 @@ test('NestJS → FastAPI HTTP thật → SQLite (fixture, không đánh giá ML)
     assert.ok(ready, 'FastAPI did not become ready');
     process.env.AI_API_URL = `http://127.0.0.1:${port}/predict`;
     process.env.AI_API_TOKEN = 'integration-fixture-token';
-    const account = await ctx.request('/auth/register', 'POST', { email: 'integration@example.com', name: 'Integration', password: 'integration-password' });
+    const account = await ctx.request('/auth/register', 'POST', { email: 'integration@example.com', name: 'Integration', password: 'Integration-password-123' });
     assert.equal(account.status, 201);
     const token = account.data.accessToken;
     const result = await ctx.request('/scans', 'POST', { url: 'https://example.com' }, token);

@@ -1,3 +1,4 @@
+import { EvidenceController } from './evidence';
 import { HealthResponse } from './responses';
 import { Module, Controller, Get } from '@nestjs/common';
 import { APP_GUARD } from '@nestjs/core';
@@ -7,7 +8,7 @@ import { ApiOperation, ApiTags, ApiOkResponse } from '@nestjs/swagger';
 import { Db } from './database';
 import { AuthController, AuthService, AuthGuard, AdminGuard } from './auth';
 import { AiService } from './ai';
-import { ScanController } from './scans';
+import { ScanController, GuestScanController } from './scans';
 import { ReportController } from './reports';
 import { AdminController } from './admin';
 import { intConfig } from './config';
@@ -28,7 +29,7 @@ class HealthController {
     JwtModule.registerAsync({ useFactory: () => ({ secret: process.env.JWT_SECRET }) }),
     ThrottlerModule.forRootAsync({ useFactory: () => [{ name: 'default', ttl: 60000, limit: intConfig('HTTP_RATE_LIMIT', 120, 1, 10000) }] }),
   ],
-  controllers: [HealthController, AuthController, ScanController, ReportController, AdminController],
+  controllers: [HealthController, AuthController, EvidenceController, GuestScanController, ScanController, ReportController, AdminController],
   providers: [Db, AuthService, AuthGuard, AdminGuard, AiService, { provide: APP_GUARD, useClass: ThrottlerGuard }],
 })
 export class AppModule {}
