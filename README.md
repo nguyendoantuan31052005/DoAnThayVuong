@@ -45,3 +45,7 @@ npm --prefix frontend run test:e2e
 Xem [kết quả xác minh](backend/docs/VALIDATION.md), [OpenAPI](backend/docs/openapi.json), [Postman](backend/docs/postman.collection.json), [đối chiếu thiết kế](docs/THIET_KE.md). Các mô hình/dữ liệu fixture chỉ phục vụ kiểm thử, không phải AI đã huấn luyện. Chưa có mô hình/dataset thực, chỉ số đánh giá ML, Chrome Extension, xác minh email, khôi phục mật khẩu hoặc 2FA.
 
 Chỉ `.env.example` được đưa lên Git; `.env`, database, dependency và ảnh chứng cứ không được commit.
+
+## Tiến độ Đoàn Tuấn
+
+Xem [các phần Đoàn Tuấn đã push, đã hoàn thành và còn cần phối hợp](docs/TIEN_DO_DOAN_TUAN.md). Tài khoản GitHub: **nguyendoantuan31052005**.
