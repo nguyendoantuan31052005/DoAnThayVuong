@@ -1,0 +1,54 @@
+generator client {
+  provider = "prisma-client-js"
+  engineType = "client"
+}
+datasource db {
+  provider = "sqlite"
+  url = env("DATABASE_URL")
+}
+model User {
+  id String @id @default(uuid())
+  email String @unique
+  name String
+  passwordHash String
+  role String @default("USER")
+  blocked Boolean @default(false)
+  createdAt DateTime @default(now())
+  scans Scan[]
+  reports Report[]
+  sessions Session[]
+}
+model Scan {
+  id String @id @default(uuid())
+  userId String
+  user User @relation(fields: [userId], references: [id])
+  url String
+  riskScore Float
+  riskLevel String
+  reasons String
+  modelVersion String
+  createdAt DateTime @default(now())
+  @@index([userId, createdAt])
+}
+model Report {
+  id String @id @default(uuid())
+  userId String
+  user User @relation(fields: [userId], references: [id])
+  url String
+  description String
+  status String @default("PENDING")
+  adminNote String @default("")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@index([userId, createdAt])
+}
+
+model Session {
+  id String @id @default(uuid())
+  userId String
+  user User @relation(fields: [userId], references: [id])
+  expiresAt DateTime
+  revokedAt DateTime?
+  createdAt DateTime @default(now())
+  @@index([userId, expiresAt])
+}

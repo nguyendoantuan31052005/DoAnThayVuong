@@ -1,0 +1,61 @@
+{
+  "name": "phishing-backend",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/main.js",
+    "dev": "node scripts/dev.cjs",
+    "db:generate": "prisma generate",
+    "db:push": "prisma db push",
+    "test": "npm run build && tsx --test --test-concurrency=1 test/*.test.ts",
+    "db:migrate": "prisma migrate deploy",
+    "db:status": "prisma migrate status",
+    "db:studio": "prisma studio",
+    "docs:generate": "npm run build && node scripts/export-openapi.cjs && node scripts/export-postman.cjs",
+    "admin:promote": "node scripts/promote-admin.cjs",
+    "check": "npm run db:generate && npm run build && npm test",
+    "setup": "node scripts/setup.cjs",
+    "test:fastapi": "npm run build && tsx --test integration/fastapi.integration.ts",
+    "docker:smoke": "node scripts/smoke-docker.cjs",
+    "docker:build": "node scripts/build-docker.cjs",
+    "env:init": "node scripts/init-env.cjs",
+    "env:check": "node scripts/check-env.cjs"
+  },
+  "dependencies": {
+    "@nestjs/common": "^11.0.0",
+    "@nestjs/core": "^11.0.0",
+    "@nestjs/jwt": "^11.0.0",
+    "@nestjs/platform-express": "^11.0.0",
+    "@nestjs/swagger": "^11.4.7",
+    "@nestjs/throttler": "^6.7.1",
+    "@prisma/adapter-libsql": "^6.19.0",
+    "@prisma/client": "6.19.0",
+    "bcryptjs": "^3.0.0",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.2",
+    "dotenv": "^16.6.0",
+    "helmet": "^8.3.0",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.2",
+    "prisma": "6.19.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^24.0.0",
+    "tsx": "^4.20.0",
+    "typescript": "^5.9.0"
+  },
+  "engines": {
+    "node": ">=22.0.0 <25"
+  },
+  "overrides": {
+    "@prisma/config": {
+      "deepmerge-ts": "8.0.2",
+      "effect": "3.22.3"
+    },
+    "@nestjs/swagger": {
+      "js-yaml": "5.5.0"
+    }
+  }
+}

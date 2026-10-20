@@ -1,0 +1,3 @@
+# Test fixture only; install in an isolated venv.
+fastapi==0.141.1
+uvicorn==0.52.1

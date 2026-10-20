@@ -1,0 +1,36 @@
+name: Kiểm tra backend
+on:
+  push:
+    paths: ['backend/**', '.github/workflows/backend.yml']
+  pull_request:
+    paths: ['backend/**', '.github/workflows/backend.yml']
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: backend/package-lock.json
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: backend/integration/requirements.lock.txt
+      - run: npm ci
+      - run: npm run setup
+      - run: npm run env:check
+      - run: npm test
+      - run: python -m pip install -r integration/requirements.lock.txt
+      - run: npm run test:fastapi
+      - run: npm run docs:generate
+      - run: git diff --exit-code -- docs/openapi.json docs/postman.collection.json
+      - run: docker build -t phishing-backend:local .
+      - run: npm run docker:smoke

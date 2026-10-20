@@ -1,0 +1,20 @@
+services:
+  backend:
+    build: .
+    ports:
+      - "${PORT:-3000}:3000"
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      DATABASE_URL: file:/data/phishing.db
+      JWT_SECRET: ${JWT_SECRET:?Hãy tạo JWT_SECRET trong .env hoặc cấu hình biến môi trường}
+      FRONTEND_ORIGIN: ${FRONTEND_ORIGIN:-http://localhost:5173}
+      AI_API_URL: ${AI_API_URL:-}
+      AI_API_TOKEN: ${AI_API_TOKEN:-}
+      HTTP_RATE_LIMIT: ${HTTP_RATE_LIMIT:-120}
+      AI_TIMEOUT_MS: ${AI_TIMEOUT_MS:-10000}
+    volumes:
+      - backend_data:/data
+    restart: unless-stopped
+volumes:
+  backend_data:
