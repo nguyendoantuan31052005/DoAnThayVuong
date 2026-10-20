@@ -1,5 +1,7 @@
 # Giao diện React + TypeScript
 
+> doantuan đã up phần triển khai hiện có. Xem [bảng tiến độ](../docs/TIEN_DO_DOAN_TUAN.md) để biết phạm vi đã xong và còn thiếu.
+
 Tại thư mục gốc chạy `npm run setup`, rồi `npm run dev`. Vite proxy `/api` đến backend cổng 3000. Khi cần thay đổi, sao chép `.env.example` thành `.env`; `BACKEND_URL` dùng cho Vite phát triển, `VITE_API_URL` được đóng vào bundle lúc build và phải là địa chỉ công khai, không chứa secret.
 
 `npm run build` tại đây tạo `dist`; Docker phục vụ SPA bằng Nginx và proxy API. JWT lưu trong sessionStorage của tab, xóa khi đăng xuất/401; không có chức năng ghi nhớ đăng nhập lâu dài. Sáng/tối lưu cục bộ trong trình duyệt. Ảnh chứng cứ được tải qua API có xác thực, không công khai URL file.

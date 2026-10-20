@@ -11,5 +11,8 @@
     "docker:build": "node scripts/build-images.cjs",
     "docker:smoke": "node scripts/smoke-stack.cjs"
   },
-  "engines": { "node": ">=22 <25" }
+  "engines": {
+    "node": ">=22 <25"
+  },
+  "author": "doantuan (nguyendoantuan31052005)"
 }

@@ -1,5 +1,7 @@
 # Backend NestJS — Hệ thống phát hiện website Phishing bằng AI
 
+> doantuan đã up phần triển khai hiện có. Xem [bảng tiến độ](../docs/TIEN_DO_DOAN_TUAN.md) để biết phạm vi đã xong và còn thiếu.
+
 Backend cho Người 2: NestJS 11, TypeScript, Prisma 6.19 và SQLite. Đã có xác thực, JWT có thể thu hồi, phân quyền User/Admin, tích hợp FastAPI, lịch sử, báo cáo, quản trị, Swagger, Postman, migration, kiểm thử và Docker.
 
 Mô hình AI do thành viên AI cung cấp. Backend không trả điểm giả nếu dịch vụ AI chưa có. Fixture FastAPI trong thư mục `integration` chỉ dùng kiểm thử hợp đồng, không phải mô hình phát hiện phishing.

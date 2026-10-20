@@ -1,5 +1,7 @@
 # Phishing AI Detector
 
+> doantuan đã up phần triển khai hiện có. Xem [bảng tiến độ](docs/TIEN_DO_DOAN_TUAN.md) để biết phạm vi đã xong và còn thiếu.
+
 Ứng dụng tiếng Việt gồm **React + TypeScript**, **NestJS**, **Prisma + SQLite**, kết nối dịch vụ AI **FastAPI** qua HTTP.
 
 ## Chạy phát triển

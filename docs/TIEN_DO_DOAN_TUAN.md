@@ -37,3 +37,7 @@ Mã nguồn ứng dụng đã được push trong commit `77c8c3b` với thông 
 ## Những tệp không push
 
 Không đưa `.env` thật, khóa bí mật, database cá nhân, ảnh chứng cứ, `node_modules`, thư mục build và môi trường Python lên GitHub. Đây là dữ liệu riêng hoặc tệp sinh ra; các mẫu cấu hình, lockfile và migration cần thiết đã có trong repository.
+
+## Cách GitHub hiển thị tiến độ
+
+**doantuan đã up** ghi chú bàn giao vào tài liệu từng phần. GitHub hiển thị commit gần nhất tác động đến từng tệp/thư mục; các thông điệp có thể khác nhau sau những lần cập nhật tiếp theo. Bảng này ghi phạm vi chức năng, không có nghĩa mọi tính năng mở rộng đã hoàn thành.

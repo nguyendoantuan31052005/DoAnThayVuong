@@ -1,3 +1,4 @@
+# doantuan đã up workflow kiểm tra; trạng thái mỗi lần chạy xem trong GitHub Actions.
 name: Kiểm tra hệ thống
 on: [push, pull_request]
 permissions:
