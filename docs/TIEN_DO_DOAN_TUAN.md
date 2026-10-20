@@ -8,21 +8,21 @@ Repository: https://github.com/nguyendoantuan31052005/DoAnThayVuong — nhánh `
 
 | Phần | Nội dung | Trạng thái |
 |---|---|---|
-| Backend NestJS | Khởi tạo dự án TypeScript, cấu hình và xử lý lỗi/validation | Đã xong |
-| Xác thực | Đăng ký, đăng nhập, đăng xuất, đổi mật khẩu, JWT có thể thu hồi | Đã xong |
-| Phân quyền | User/Admin; khóa, mở khóa, đổi vai trò và thu hồi phiên | Đã xong |
-| API kiểm tra URL | Chuẩn hóa URL, gọi FastAPI, kiểm tra phản hồi, điểm 0–100, mức rủi ro và lý do | Đã xong phần tích hợp; cần dịch vụ AI thật để dự đoán thực tế |
-| Lịch sử | Lưu kết quả cho tài khoản, xem chi tiết, tìm kiếm, lọc, phân trang, xóa và tổng quan cá nhân | Đã xong |
-| Báo cáo phishing | Gửi báo cáo, liên kết lượt quét, chứng cứ URL/ảnh PNG/JPG riêng tư và Admin xử lý | Đã xong |
-| Hồ sơ | Cập nhật tên, tổ chức và đổi mật khẩu | Đã xong |
-| Quản trị | Quản lý người dùng, báo cáo, lịch sử, thống kê, biểu đồ và nhật ký thao tác | Đã xong |
-| Frontend React | Giao diện tiếng Việt, kết nối API, trang User/Admin, responsive và sáng/tối | Đã xong theo nội dung thiết kế dạng văn bản; chưa đối chiếu trực tiếp ảnh Figma/PDF |
-| Database | Prisma + SQLite, migration giữ dữ liệu hiện có | Đã xong; chưa triển khai PostgreSQL |
-| Cấu hình | Mẫu `.env.example`, tạo khóa riêng khi setup, không commit secret | Đã xong |
-| Tài liệu | README, Swagger/OpenAPI, Postman, hướng dẫn chạy và đối chiếu thiết kế | Đã xong |
-| Docker | Build backend/frontend, Nginx proxy, Compose và lưu dữ liệu bằng volume | Đã xong và kiểm tra tích hợp cục bộ |
-| Kiểm thử | 55 kiểm thử backend, 5 kịch bản trình duyệt, 1 kiểm thử HTTP FastAPI fixture | Đã đạt tại môi trường phát triển |
-| GitHub Actions | Workflow kiểm tra toàn hệ thống | Đã đưa lên GitHub; chưa xác nhận kết quả chạy trên GitHub |
+| Backend NestJS | Khởi tạo dự án TypeScript, cấu hình và xử lý lỗi/validation | doantuan đã up |
+| Xác thực | Đăng ký, đăng nhập, đăng xuất, đổi mật khẩu, JWT có thể thu hồi | doantuan đã up |
+| Phân quyền | User/Admin; khóa, mở khóa, đổi vai trò và thu hồi phiên | doantuan đã up |
+| API kiểm tra URL | Chuẩn hóa URL, gọi FastAPI, kiểm tra phản hồi, điểm 0–100, mức rủi ro và lý do | doantuan đã up phần tích hợp; cần dịch vụ AI thật để dự đoán thực tế |
+| Lịch sử | Lưu kết quả cho tài khoản, xem chi tiết, tìm kiếm, lọc, phân trang, xóa và tổng quan cá nhân | doantuan đã up |
+| Báo cáo phishing | Gửi báo cáo, liên kết lượt quét, chứng cứ URL/ảnh PNG/JPG riêng tư và Admin xử lý | doantuan đã up |
+| Hồ sơ | Cập nhật tên, tổ chức và đổi mật khẩu | doantuan đã up |
+| Quản trị | Quản lý người dùng, báo cáo, lịch sử, thống kê, biểu đồ và nhật ký thao tác | doantuan đã up |
+| Frontend React | Giao diện tiếng Việt, kết nối API, trang User/Admin, responsive và sáng/tối | doantuan đã up theo nội dung thiết kế dạng văn bản; chưa đối chiếu trực tiếp ảnh Figma/PDF |
+| Database | Prisma + SQLite, migration giữ dữ liệu hiện có | doantuan đã up bản SQLite; chưa triển khai PostgreSQL |
+| Cấu hình | Mẫu `.env.example`, tạo khóa riêng khi setup, không commit secret | doantuan đã up |
+| Tài liệu | README, Swagger/OpenAPI, Postman, hướng dẫn chạy và đối chiếu thiết kế | doantuan đã up |
+| Docker | Build backend/frontend, Nginx proxy, Compose và lưu dữ liệu bằng volume | doantuan đã up; đã kiểm tra tích hợp cục bộ |
+| Kiểm thử | 55 kiểm thử backend, 5 kịch bản trình duyệt, 1 kiểm thử HTTP FastAPI fixture | doantuan đã up; kiểm thử đạt tại môi trường phát triển |
+| GitHub Actions | Workflow kiểm tra toàn hệ thống | doantuan đã up workflow; chưa xác nhận kết quả chạy trên GitHub |
 
 Mã nguồn ứng dụng đã được push trong commit `77c8c3b` với thông điệp “Hoàn thiện giao diện tiếng Việt và tích hợp toàn bộ hệ thống”. Tài liệu tiến độ này được bổ sung bằng commit riêng.
 
