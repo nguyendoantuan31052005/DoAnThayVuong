@@ -1,4 +1,34 @@
 {
+<<<<<<< HEAD
+  "name": "phishing-detector-fe",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "oxlint",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "axios": "^1.21.0",
+    "clsx": "^2.1.1",
+    "lucide-react": "^1.66.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "react-router-dom": "^7.18.5"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/node": "^24.19.2",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.2",
+    "oxlint": "^1.89.0",
+    "typescript": "~7.0.2",
+    "vite": "^8.3.5"
+  }
+=======
   "name": "do-an-phishing-ai",
   "version": "1.0.0",
   "private": true,
@@ -15,4 +45,5 @@
     "node": ">=22 <25"
   },
   "author": "doantuan (nguyendoantuan31052005)"
+>>>>>>> 01b32ffaf89242d7f9246f62d9d26e81e8ed7cb7
 }
