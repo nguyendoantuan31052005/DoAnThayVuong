@@ -1,37 +1,3 @@
-<<<<<<< HEAD
-# React + TypeScript + Vite
-
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
-```
-
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
-=======
 # Phishing AI Detector
 
 > doantuan đã up phần triển khai hiện có. Xem [bảng tiến độ](docs/TIEN_DO_DOAN_TUAN.md) để biết phạm vi đã xong và còn thiếu.
@@ -85,4 +51,3 @@ Chỉ `.env.example` được đưa lên Git; `.env`, database, dependency và �
 ## Tiến độ Đoàn Tuấn
 
 Xem [các phần Đoàn Tuấn đã push, đã hoàn thành và còn cần phối hợp](docs/TIEN_DO_DOAN_TUAN.md). Tài khoản GitHub: **nguyendoantuan31052005**.
->>>>>>> 01b32ffaf89242d7f9246f62d9d26e81e8ed7cb7
