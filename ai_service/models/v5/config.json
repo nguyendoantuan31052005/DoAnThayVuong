@@ -1,0 +1,7 @@
+{
+    "model": "RandomForest_V5",
+    "threshold": 0.6,
+    "phishing_label": 0,
+    "legitimate_label": 1,
+    "feature_count": 19
+}
