@@ -1,0 +1,13 @@
+﻿website,url,prediction,riskScore
+Google,https://www.google.com,LEGITIMATE,15.74
+Google,https://www.google.com/,LEGITIMATE,34.0
+Google,http://www.google.com,LEGITIMATE,36.56
+Wikipedia,https://www.wikipedia.org,LEGITIMATE,10.66
+Wikipedia,https://www.wikipedia.org/,LEGITIMATE,37.55
+Wikipedia,http://www.wikipedia.org,PHISHING,54.01
+GitHub,https://github.com,PHISHING,99.23
+GitHub,https://github.com/,PHISHING,99.23
+GitHub,http://github.com,PHISHING,100.0
+Python,https://www.python.org,LEGITIMATE,15.74
+Python,https://www.python.org/,LEGITIMATE,34.0
+Python,http://www.python.org,LEGITIMATE,36.56

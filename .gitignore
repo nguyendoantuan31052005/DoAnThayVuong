@@ -1,4 +1,30 @@
-# doantuan đã up; phạm vi hoàn thành xem docs/TIEN_DO_DOAN_TUAN.md.
+
+# doantuan da up; pham vi hoan thanh xem docs/TIEN_DO_DOAN_TUAN.md.
+
+# Node.js
 node_modules/
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# VS Code
+.vscode/
+
+# Environment
 .env
+.env.*
+!.env.example
+
+# AI datasets
+ai_service/data/
+
+# AI trained models
+*.pkl
+*.joblib
+
+# Logs and temporary files
 *.log
+*.bak

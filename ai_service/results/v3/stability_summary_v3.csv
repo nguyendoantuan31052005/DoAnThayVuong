@@ -1,0 +1,5 @@
+﻿website,risk_without_slash,risk_with_slash,difference,prediction_changed
+Google,15.74,34.0,18.26,False
+Wikipedia,10.66,37.55,26.89,False
+GitHub,99.23,99.23,0.0,False
+Python,15.74,34.0,18.26,False

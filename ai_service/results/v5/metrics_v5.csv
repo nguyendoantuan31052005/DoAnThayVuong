@@ -1,0 +1,2 @@
+accuracy,precision_phishing,recall_phishing,f1_phishing,average_precision_phishing,threshold
+0.8657218407867879,0.5295994893888623,0.7042597209697098,0.6045674992600014,0.66972968562831,0.6
